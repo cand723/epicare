@@ -8,18 +8,20 @@
 
 ## 🔍 Fitur Utama
 
-- 🔎 **Pencarian Artikel**: Temukan artikel kesehatan dengan mudah menggunakan kata kunci.
-- 🗂️ **Filter Kategori**: Saring artikel berdasarkan topik seperti TBC, Malaria, Hepatitis, dan lainnya.
-- 📄 **Halaman Detail Artikel**: Baca artikel lengkap dengan informasi mendalam dan visual pendukung.
-- 🎨 **Tampilan Responsif**: Antarmuka modern dengan Tailwind CSS yang dapat diakses di berbagai perangkat.
-- 🌙 **Mode Terang/Gelap**: Ubah tampilan sesuai preferensi pengguna.
+- **Pencarian Artikel**: Temukan artikel kesehatan dengan mudah menggunakan kata kunci.
+- **Filter Kategori**: Saring artikel berdasarkan topik seperti TBC, Malaria, Hepatitis, dan lainnya.
+- **Halaman Detail Artikel**: Baca artikel lengkap dengan informasi mendalam dan visual pendukung.
+- **Chatbot**: Mengobrol dengan AI tentang TBC.
+- **Sistem Analisis Gejala**: Prediksi gejala TBC dengan mengisi kuesioner.
+- **Analisis Citra Rontgen**: Deteksi TBC melalui gambar Rontgen.
+- **Tampilan Responsif**: Antarmuka modern dengan Tailwind CSS yang dapat diakses di berbagai perangkat.
 
 ---
 
 ## 🛠️ Teknologi yang Digunakan
 
 - **Frontend**: HTML, Tailwind CSS, JavaScript
-- **Backend**: FastAPI (Python)
+- **Backend**: FastAPI (Python), Gemini API
 - **Deployment**: Render.com
 
 ---
