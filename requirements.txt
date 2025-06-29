@@ -1,0 +1,15 @@
+fastapi[all]
+starlette
+pydantic
+supabase
+passlib
+authlib
+python-dotenv
+tensorflow
+numpy
+google-generativeai
+jinja2
+uvicorn
+pydantic[email]
+bcrypt
+pillow

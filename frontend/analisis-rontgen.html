@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analisis Rontgen Dada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+      body {
+        background-color: #f9fdfb;
+        margin: 0;
+        padding: 0;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: #1a1a1a;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f0f0f0;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #cbd5e0;
+        border-radius: 4px;
+      }
+      #chat-scroll-container {
+        height: calc(76vh - 12rem);
+        overflow-y: auto;
+      }
+      #chat-scroll-container::-webkit-scrollbar {
+        display: none;
+      }
+      .sidebar-hidden {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+      }
+      .sidebar-visible {
+        transform: translateX(0);
+        transition: transform 0.3s ease-in-out;
+      }
+      #input-wrapper {
+        transition: all 0.3s ease-in-out;
+      }
+      /* Styles for drag and drop area */
+      #drop-area {
+        border: 2px dashed #a7f3d0; /* green-200 */
+        background-color: #ecfdf5; /* green-50 */
+        transition: all 0.3s ease-in-out;
+      }
+      #drop-area.highlight {
+        border-color: #10b981; /* green-500 */
+        background-color: #d1fae5; /* green-100 */
+      }
+      #image-preview-container {
+        display: none; /* Hidden by default */
+      }
+      /* New style for loading indicator */
+      #loading-indicator {
+        display: none; /* Hidden by default */
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <div id="navbar-placeholder"></div>
+    <script>
+      fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('navbar-placeholder').innerHTML = data;
+          // Reattach menu toggle event listener after loading navbar
+          document.getElementById('menu-toggle').addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+          });
+        });
+
+    </script>
+
+    <div class="w-full px-4 sm:px-6 md:px-10 lg:px-20 py-10 bg-white shadow-inner flex-grow">
+      <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-8 max-w-7xl mx-auto">
+        <div class="text-center md:text-left">
+          <h1 class="text-4xl sm:text-5xl font-bold leading-tight mb-4">Analisis Rontgen Dada</h1>
+          <p class="text-lg text-gray-600">Unggah hasil rontgen dada untuk memulai proses analisis.</p>
+        </div>
+        <div>
+          <img src="./img/1.png" alt="Ilustrasi Dokter" class="w-48 h-48 sm:w-64 sm:h-64 object-contain" />
+        </div>
+      </div>
+
+      <div id="drop-area" class="border-2 border-dashed border-green-400 rounded-lg p-8 mt-10 bg-green-50 text-center max-w-4xl mx-auto cursor-pointer">
+        <input type="file" id="fileInput" accept="image/jpeg, image/png, image/jpg" class="hidden" />
+        <label for="fileInput" class="block w-full h-full">
+          <div class="text-green-600 text-6xl mb-4">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <p class="mb-4 text-lg text-gray-800 font-medium">Tarik dan letakkan file di sini atau <span class="text-green-700 font-semibold underline">Pilih File</span></p>
+        </label>
+
+        <div id="image-preview-container" class="mt-6">
+          <img id="image-preview" src="#" alt="Pratinjau Gambar" class="max-w-full h-auto rounded-lg shadow-md mx-auto" />
+        </div>
+
+        <button id="predictButton" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded text-base font-semibold mt-6 hidden">
+          Prediksi
+        </button>
+
+        <div id="loading-indicator" class="mt-6 flex items-center justify-center text-green-600 hidden">
+          <i class="fas fa-spinner fa-spin text-2xl mr-2"></i>
+          <span>Memproses prediksi...</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto mt-12">
+        <div>
+          <h2 class="font-semibold text-2xl mb-4 text-gray-800">Petunjuk Penting</h2>
+          <div class="flex items-start gap-4 bg-white p-5 border rounded-2xl shadow-sm">
+            <img
+              src="./img/2.png"
+              alt="Petunjuk"
+              class="w-16 h-16 object-cover rounded-lg"
+            />
+            <div class="text-base text-gray-800 space-y-2">
+              <p>Pastikan gambar rontgen yang diunggah jelas dan tidak buram.</p>
+              <p>Format file yang didukung: <strong>JPG, JPEG, atau PNG</strong>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="font-semibold text-2xl mb-4 text-gray-800">Bagaimana Cara Kerjanya?</h2>
+          <div class="flex items-start gap-4 bg-white p-5 border rounded-2xl shadow-sm">
+            <img
+              src="./img/3.png"
+              alt="AI Detection"
+              class="w-16 h-16 object-cover rounded-lg"
+            />
+            <div class="text-base text-gray-800 space-y-2">
+              <p>Model AI akan memproses citra secara otomatis dan memberikan hasil dalam waktu singkat.</p>
+              <p>Sistem dirancang untuk menghasilkan analisis yang cepat, mudah dipahami, dan akurat.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('fileInput');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const predictButton = document.getElementById('predictButton');
+        const loadingIndicator = document.getElementById('loading-indicator'); // New: Get loading indicator
+
+        let uploadedFile = null; // Variable to store the uploaded file
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+          dropArea.addEventListener(eventName, preventDefaults, false);
+          document.body.addEventListener(eventName, preventDefaults, false); // Prevent default for entire body
+        });
+
+        // Highlight drop area when dragging over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+          dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+          dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        // Handle file input change
+        fileInput.addEventListener('change', () => {
+          if (fileInput.files.length > 0) {
+            uploadedFile = fileInput.files[0];
+          }
+          handleFiles(fileInput.files);
+        });
+
+        // Handle predict button click
+        predictButton.addEventListener('click', () => {
+          if (!uploadedFile) {
+            alert("Silakan unggah gambar terlebih dahulu.");
+            return;
+          }
+
+          // Show loading indicator and hide predict button
+          predictButton.classList.add('hidden');
+          loadingIndicator.classList.remove('hidden');
+
+          const formData = new FormData();
+          formData.append("file", uploadedFile);
+
+          fetch("https://epicare-fullstack.onrender.com/predict-rontgen/", {
+            method: "POST",
+            body: formData
+          })
+          .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Hide loading indicator
+            loadingIndicator.classList.add('hidden');
+
+            // Simpan hasil ke localStorage dan redirect
+            localStorage.setItem("hasilPrediksi", JSON.stringify(data));
+            localStorage.setItem("gambarRontgen", imagePreview.src);
+            window.location.href = "hasil-rontgen.html";
+          })
+          .catch(error => {
+            console.error("Gagal memproses prediksi:", error);
+            alert("Terjadi kesalahan saat memproses gambar. " + error.message);
+            // Hide loading indicator and re-show predict button on error
+            loadingIndicator.classList.add('hidden');
+            predictButton.classList.remove('hidden');
+          });
+        });
+
+        function preventDefaults(e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+
+        function highlight() {
+          dropArea.classList.add('highlight');
+        }
+
+        function unhighlight() {
+          dropArea.classList.remove('highlight');
+        }
+
+        function handleDrop(e) {
+          const dt = e.dataTransfer;
+          const files = dt.files;
+          handleFiles(files);
+        }
+
+        function handleFiles(files) {
+          if (files.length === 0) {
+            console.log('Tidak ada file yang dipilih.');
+            return;
+          }
+
+          const file = files[0];
+          uploadedFile = file; // Store the file
+          if (!file.type.startsWith('image/')) {
+            alert('Harap unggah file gambar (JPG, JPEG, PNG).');
+            return;
+          }
+
+          // Show image preview
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            imagePreview.src = e.target.result;
+            imagePreviewContainer.style.display = 'block';
+            predictButton.classList.remove('hidden'); // Show predict button when image is loaded
+            loadingIndicator.classList.add('hidden'); // Ensure loading indicator is hidden
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50; /* Menjaga navbar di atas */
+    backdrop-filter: blur(10px);
+    background: rgba(1, 191, 129, 0.8);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+nav .nav-link {
+    @apply text-white hover:text-emerald-200 transition duration-300 font-bold;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+nav .nav-link:hover {
+    transform: translateY(-2px);
+}
+
+nav .nav-link::after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 2px;
+    background: white;
+    transition: width 0.3s;
+}
+
+nav .nav-link:hover::after {
+    width: 100%;
+  }

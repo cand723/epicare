@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analisis Gejala TBC - Epicare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./style/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: #1a1a1a; /* Default text color */
+      }
+      /* Custom scrollbar styles */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f0f0f0;
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #cbd5e0;
+        border-radius: 4px;
+      }
+      /* Hide scrollbar for specific containers if needed */
+      #chat-scroll-container { /* This ID is not present in the provided HTML for this page */
+        height: calc(76vh - 12rem);
+        overflow-y: auto;
+      }
+      #chat-scroll-container::-webkit-scrollbar {
+        display: none;
+      }
+      /* Sidebar and input transition styles (not directly used on this page, but kept from original) */
+      .sidebar-hidden {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+      }
+      .sidebar-visible {
+        transform: translateX(0);
+        transition: transform 0.3s ease-in-out;
+      }
+      #input-wrapper { /* This ID is not present in the provided HTML for this page */
+        transition: all 0.3s ease-in-out;
+      }
+
+      /* Custom styles for glassmorphism effect */
+      .glass {
+        background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent white */
+        backdrop-filter: blur(10px); /* Blur effect */
+        border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* Subtle shadow */
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-green-100 via-blue-50 to-purple-50 text-gray-800 min-h-screen flex flex-col">
+    <div id="navbar-placeholder" class="flex-shrink-0 h-16"></div>
+    <script>
+fetch('navbar.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('navbar-placeholder').innerHTML = data;
+    // Reattach menu toggle event listener after loading navbar
+    document.getElementById('menu-toggle').addEventListener('click', function () {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+  });
+
+    </script>
+
+    <main class="flex-grow px-4 md:px-8 max-w-7xl mx-auto py-8">
+      <section class="text-center mb-10 mt-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 drop-shadow-lg mb-4">Analisis Gejala TBC</h1>
+        <p class="text-lg md:text-xl mt-1 text-gray-600 max-w-2xl mx-auto">Sistem deteksi dini TBC berbasis gejala menggunakan Machine Learning</p>
+      </section>
+
+      <form class="grid md:grid-cols-2 gap-6 text-center overflow-auto">
+        <div class="glass p-6 rounded-2xl shadow-lg space-y-6">
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q1. Apakah Anda mengalami batuk?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q1" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak/Ringan</span></label>
+              <label class="flex items-center"><input type="radio" name="q1" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Sedang</span></label>
+              <label class="flex items-center"><input type="radio" name="q1" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Parah</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q2. Apakah Anda sering berkeringat di malam hari?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q2" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak/Ringan</span></label>
+              <label class="flex items-center"><input type="radio" name="q2" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Sedang</span></label>
+              <label class="flex items-center"><input type="radio" name="q2" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Parah</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q3. Apakah Anda mengalami kesulitan bernapas?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q3" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak/Ringan</span></label>
+              <label class="flex items-center"><input type="radio" name="q3" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Sedang</span></label>
+              <label class="flex items-center"><input type="radio" name="q3" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Parah</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q4. Apakah Anda mengalami demam?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q4" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak/Ringan</span></label>
+              <label class="flex items-center"><input type="radio" name="q4" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Sedang</span></label>
+              <label class="flex items-center"><input type="radio" name="q4" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Parah</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q5. Apakah Anda merasakan nyeri dada?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q5" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak/Ringan</span></label>
+              <label class="flex items-center"><input type="radio" name="q5" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Sedang</span></label>
+              <label class="flex items-center"><input type="radio" name="q5" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Parah</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+        </div>
+
+        <div class="glass p-6 rounded-2xl shadow-lg space-y-6">
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q6. Bagaimana warna dahak Anda?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q6" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Berdarah</span></label>
+              <label class="flex items-center"><input type="radio" name="q6" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak berwarna</span></label>
+              <label class="flex items-center"><input type="radio" name="q6" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Hijau atau kekuningan</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q7. Apakah Anda memiliki gangguan sistem imun (misalnya HIV/AIDS, diabetes, dll)?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q7" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak/Ringan</span></label>
+              <label class="flex items-center"><input type="radio" name="q7" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Sedang</span></label>
+              <label class="flex items-center"><input type="radio" name="q7" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Parah</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q8. Apakah Anda kehilangan minat pada hal-hal yang biasa disukai?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q8" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak/Ringan</span></label>
+              <label class="flex items-center"><input type="radio" name="q8" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Sedang</span></label>
+              <label class="flex items-center"><input type="radio" name="q8" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Parah</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q9. Apakah Anda sering merasa menggigil?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q9" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak/Ringan</span></label>
+              <label class="flex items-center"><input type="radio" name="q9" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Sedang</span></label>
+              <label class="flex items-center"><input type="radio" name="q9" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Parah</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+
+          <div>
+            <label class="block font-semibold mb-2 text-base md:text-lg text-gray-800">Q10. Apakah Anda kesulitan berkonsentrasi?</label>
+            <div class="flex gap-3 md:gap-6 text-sm md:text-base justify-center">
+              <label class="flex items-center"><input type="radio" name="q10" value="0" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Tidak/Ringan</span></label>
+              <label class="flex items-center"><input type="radio" name="q10" value="1" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Sedang</span></label>
+              <label class="flex items-center"><input type="radio" name="q10" value="2" class="mr-1 accent-green-600 w-4 h-4" /> <span class="text-gray-700">Parah</span></label>
+            </div>
+            <hr class="border-gray-300 mt-4" />
+          </div>
+        </div>
+      </form>
+
+      <div class="flex justify-center gap-4 my-8">
+        <a href="./sistem_analisis_page2.html" class="bg-green-600 hover:bg-green-700 text-white px-10 py-3 rounded-full shadow-lg text-xl font-bold transform hover:scale-105 transition-all duration-300">Next</a>
+      </div>
+    </main>
+
+    <style>
+      /* Popup overlay */
+      #popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      /* Popup content */
+      #popup {
+        background: #ffffff; /* White background for popup */
+        padding: 30px 40px; /* More padding */
+        border-radius: 16px; /* More rounded corners */
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); /* Softer shadow */
+        color: #1a1a1a; /* Dark text */
+        max-width: 90%;
+        text-align: center;
+        font-size: 1.1rem; /* Slightly smaller font */
+        border: 1px solid #e0e0e0; /* Light border */
+      }
+      #popup button {
+        margin-top: 20px; /* More margin */
+        background: #10b981; /* Green-600 */
+        border: none;
+        padding: 10px 24px; /* More padding */
+        border-radius: 9999px; /* Fully rounded button */
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+      }
+      #popup button:hover {
+        background: #059669; /* Green-700 */
+        transform: translateY(-1px); /* Slight lift effect */
+      }
+    </style>
+
+    <div id="popup-overlay">
+      <div id="popup">
+        Mohon isi semua pertanyaan sebelum melanjutkan.
+        <br />
+        <button id="popup-close-btn">Tutup</button>
+      </div>
+    </div>
+
+    <script>
+      // Ambil elemen form
+      const form = document.querySelector("form");
+
+      // Restore saved selections from localStorage
+      document.addEventListener('DOMContentLoaded', () => {
+        const savedData = JSON.parse(localStorage.getItem('formData')) || {};
+        Object.keys(savedData).forEach(key => {
+          const value = savedData[key];
+          if (value !== null) {
+            const radio = document.querySelector(`input[name="${key}"][value="${value}"]`);
+            if (radio) {
+              radio.checked = true;
+            }
+          }
+        });
+      });
+    
+      // Fungsi untuk mengumpulkan data yang dipilih
+      function collectFormData() {
+        const formData = {};
+    
+        // Ambil data setiap input radio dan simpan dalam object formData
+        formData.q1 = document.querySelector('input[name="q1"]:checked')?.value || null;
+        formData.q2 = document.querySelector('input[name="q2"]:checked')?.value || null;
+        formData.q3 = document.querySelector('input[name="q3"]:checked')?.value || null;
+        formData.q4 = document.querySelector('input[name="q4"]:checked')?.value || null;
+        formData.q5 = document.querySelector('input[name="q5"]:checked')?.value || null;
+        formData.q6 = document.querySelector('input[name="q6"]:checked')?.value || null;
+        formData.q7 = document.querySelector('input[name="q7"]:checked')?.value || null;
+        formData.q8 = document.querySelector('input[name="q8"]:checked')?.value || null;
+        formData.q9 = document.querySelector('input[name="q9"]:checked')?.value || null;
+        formData.q10 = document.querySelector('input[name="q10"]:checked')?.value || null;
+    
+        return formData;
+      }
+    
+      // Fungsi untuk menampilkan data di console
+      function displayFormData() {
+        const data = collectFormData();
+        console.log("Form Data: ", data);
+
+        // Check if all questions are answered
+        const allAnswered = Object.values(data).every(value => value !== null);
+        if (!allAnswered) {
+          // Show popup
+          document.getElementById('popup-overlay').style.display = 'flex';
+          return;
+        }
+        
+        // Simpan data di localStorage
+        localStorage.setItem('formData', JSON.stringify(data));
+
+        // Pindah ke halaman 2 setelah data ditampilkan
+        setTimeout(() => {
+          window.location.href = './sistem_analisis_page2.html';
+        }, 1000); // Delay 1 detik
+      }
+
+      // Close popup button
+      document.getElementById('popup-close-btn').addEventListener('click', () => {
+        document.getElementById('popup-overlay').style.display = 'none';
+      });
+    
+      document.addEventListener('DOMContentLoaded', function () {
+        const nextButton = document.querySelector('a[href="./sistem_analisis_page2.html"]');
+
+        if (nextButton) {
+          nextButton.addEventListener('click', function (event) {
+            event.preventDefault(); // Mencegah halaman berpindah langsung
+            displayFormData();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

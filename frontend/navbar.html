@@ -1,0 +1,57 @@
+<nav class="bg-white/80 backdrop-blur-md shadow-md px-6 py-3 sticky top-0 z-50 border-b border-gray-200">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center justify-center gap-3">
+      <a href="./beranda.html" class="flex-row flex justify-center items-center">
+        <img src="./img/epicare-logo.png" alt="Logo" class="w-9 h-9 rounded-md shadow-sm mr-3" />
+        <span class="font-bold text-xl text-green-700 tracking-wide">Epicare</span>
+      </a>
+    </div>
+    
+    <!-- Hamburger -->
+    <div class="md:hidden">
+      <button id="menu-toggle" class="text-green-700 focus:outline-none">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Menu Desktop -->
+    <ul id="menu" class="hidden md:flex gap-6 items-center text-sm font-medium text-gray-700">
+      <li><a href="./article-list.html" class="px-3 py-2 rounded-md hover:bg-green-50 hover:text-green-700 transition">Artikel</a></li>
+      <li><a href="./sistem_analisis.html" class="px-3 py-2 rounded-md hover:bg-green-50 hover:text-green-700 transition">Analisis Gejala</a></li>
+      <li><a href="./analisis-rontgen.html" class="px-3 py-2 rounded-md hover:bg-green-50 hover:text-green-700 transition">Analisis Rontgen</a></li>
+      <li><a href="./chatbot.html" class="px-3 py-2 rounded-md hover:bg-green-50 hover:text-green-700 transition">Chatbot</a></li>
+      
+      <!-- Profil Dropdown -->
+      <li class="relative group">
+        <div class="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center text-green-700 text-sm font-semibold shadow-inner hover:scale-105 transition-transform cursor-pointer">
+          <i class="fas fa-user"></i>
+        </div>
+        <!-- Dropdown muncul saat group di-hover -->
+        <div class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          <ul class="py-2 text-sm text-gray-700">
+            <li><a href="./index.html" class="block px-4 py-2 hover:bg-gray-100">Keluar</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden mt-4">
+    <ul class="flex flex-col gap-2 text-sm font-medium text-gray-700">
+      <li><a href="./article-list.html" class="block px-4 py-2 rounded-md hover:bg-green-50 hover:text-green-700 transition">Artikel</a></li>
+      <li><a href="./sistem_analisis.html" class="block px-4 py-2 rounded-md hover:bg-green-50 hover:text-green-700 transition">Analisis Gejala</a></li>
+      <li><a href="./analisis-rontgen.html" class="block px-4 py-2 rounded-md hover:bg-green-50 hover:text-green-700 transition">Analisis Rontgen</a></li>
+      <li><a href="./chatbot.html" class="block px-4 py-2 rounded-md hover:bg-green-50 hover:text-green-700 transition">Chatbot</a></li>
+      <li><a href="./index.html" class="block px-4 py-2 rounded-md hover:bg-green-50 hover:text-green-700 transition">Keluar</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Toggle Script -->
+<script>
+  document.getElementById('menu-toggle').addEventListener('click', function () {
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>

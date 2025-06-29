@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Test Profile Popup</title>
+<style>
+  .profile-container {
+    position: relative;
+    display: inline-block;
+  }
+  .profile-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    cursor: pointer;
+  }
+  .dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-top: 5px;
+    width: 100px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+  .dropdown a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+  }
+  .dropdown a:hover {
+    background-color: #eee;
+  }
+</style>
+</head>
+<body>
+<div class="profile-container">
+  <img src="./img/profile.png" alt="Profile" class="profile-icon" id="profile-icon" />
+  <div class="dropdown" id="profile-dropdown">
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+<script>
+  const profileIcon = document.getElementById('profile-icon');
+  const dropdown = document.getElementById('profile-dropdown');
+
+  profileIcon.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (dropdown.style.display === 'block') {
+      dropdown.style.display = 'none';
+    } else {
+      dropdown.style.display = 'block';
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!profileIcon.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>

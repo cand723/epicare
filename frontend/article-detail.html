@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Epicare - Detail Artikel</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    /* Mengatur font default untuk body dan elemen prose */
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .prose {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Media queries untuk penyesuaian responsif pada layar kecil */
+    @media (max-width: 768px) {
+      /* Mengurangi padding pada container utama untuk layar kecil */
+      .main-article-container {
+        padding: 1rem;
+      }
+      /* Menyesuaikan ukuran font judul artikel untuk layar kecil */
+      #article-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body class="text-gray-800 bg-gradient-to-br from-green-100 via-blue-50 to-purple-50 min-h-screen flex flex-col">
+
+  <div id="navbar-placeholder"></div>
+  <script>
+      fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('navbar-placeholder').innerHTML = data;
+          // Reattach menu toggle event listener after loading navbar
+          document.getElementById('menu-toggle').addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+          });
+        });
+
+  </script>
+
+  <div class="container mx-auto px-4 py-8 flex-grow">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <main class="main-article-container lg:col-span-2 bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 hover:scale-[1.005]">
+
+        <h1 id="article-title" class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3 leading-tight"></h1>
+        <p id="article-meta" class="text-sm text-gray-500 mb-6 flex flex-wrap items-center space-x-3">
+          <i class="far fa-calendar-alt text-gray-400"></i>
+          <span>Tanggal tidak tersedia</span>
+
+          <span class="text-gray-400">•</span>
+
+          <i class="far fa-user text-gray-400"></i>
+          <span>Penulis Tidak Diketahui</span>
+        </p>
+
+        <img id="article-image" src="" alt="Gambar Artikel" class="w-full h-auto object-cover rounded-xl mb-6 shadow-md hidden" />
+
+        <div id="article-content" class="prose prose-base max-w-none text-gray-700 leading-relaxed"></div>
+
+        <div id="article-source" class="mt-8 text-sm text-gray-600 border-t pt-4 flex items-center space-x-2">
+          <span class="font-semibold">Sumber asli:</span>
+          <a href="#" id="article-url" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline break-all flex items-center space-x-1">
+            <i class="fas fa-external-link-alt text-blue-500"></i>
+            <span id="article-url-text">Tautan tidak tersedia</span>
+          </a>
+        </div>
+
+      </main>
+
+      <aside class="lg:col-span-1">
+        <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Artikel Terkait</h2>
+          <div id="related-articles-list">
+            </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // Fungsi untuk mengambil ID artikel dari URL
+    function getArticleIdFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    // Fungsi untuk memuat detail artikel utama
+    async function fetchArticleDetail(articleId) {
+      try {
+        const response = await fetch(`https://epicare-fullstack.onrender.com/api/articles/${articleId}`);
+        if (!response.ok) {
+          throw new Error('Gagal memuat detail artikel');
+        }
+        const article = await response.json();
+        
+        // Memperbarui elemen HTML dengan data artikel
+        document.getElementById('article-title').textContent = article.title || 'Judul Tidak Tersedia';
+        
+        const dateElement = document.querySelector('#article-meta span:first-of-type');
+        dateElement.textContent = article.published_at ? new Date(article.published_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Tanggal tidak tersedia';
+
+        const authorElement = document.querySelector('#article-meta span:last-of-type');
+        authorElement.textContent = article.author || 'Penulis Tidak Diketahui';
+
+        const imgElement = document.getElementById('article-image');
+        if (article.url_to_image) {
+          imgElement.src = article.url_to_image;
+          imgElement.classList.remove('hidden');
+        } else {
+          imgElement.classList.add('hidden');
+        }
+
+        const contentElement = document.getElementById('article-content');
+        // Menggunakan marked.js untuk mengonversi Markdown ke HTML
+        contentElement.innerHTML = marked.parse(article.content || 'Konten artikel tidak tersedia.');
+
+        const urlLink = document.getElementById('article-url');
+        const urlText = document.getElementById('article-url-text');
+        if (article.url) {
+          urlLink.href = article.url;
+          urlText.textContent = article.url;
+        } else {
+          urlLink.href = '#';
+          urlText.textContent = 'Tautan tidak tersedia';
+        }
+
+      } catch (error) {
+        console.error('Error fetching article detail:', error);
+        document.getElementById('article-title').textContent = 'Artikel Tidak Ditemukan';
+        document.getElementById('article-content').innerHTML = '<p class="text-center text-red-500 text-lg">Gagal memuat artikel ini. Silakan coba lagi nanti.</p>';
+      }
+    }
+
+    // Fungsi untuk memuat artikel terkait
+    async function fetchRelatedArticles(currentArticleId) {
+      try {
+        const response = await fetch('https://epicare-fullstack.onrender.com/api/articles');
+        if (!response.ok) {
+          throw new Error('Gagal memuat artikel terkait');
+        }
+        const allArticles = await response.json();
+        
+        const relatedArticlesList = document.getElementById('related-articles-list');
+        relatedArticlesList.innerHTML = ''; // Kosongkan dummy data
+
+        // Filter artikel terkait (misalnya, ambil 4 artikel yang berbeda dari artikel saat ini)
+        const filteredRelatedArticles = allArticles.filter(article => article.id !== currentArticleId).slice(0, 4);
+
+        if (filteredRelatedArticles.length === 0) {
+            relatedArticlesList.innerHTML = '<p class="text-center text-gray-600 text-sm">Tidak ada artikel terkait.</p>';
+        } else {
+            filteredRelatedArticles.forEach(article => {
+              const relatedArticleLink = document.createElement('a');
+              relatedArticleLink.href = `./article-detail.html?id=${article.id}`;
+              relatedArticleLink.className = 'block mb-4 p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200';
+
+              const relatedArticleTitle = document.createElement('h3');
+              relatedArticleTitle.textContent = article.title;
+              relatedArticleTitle.className = 'text-lg font-semibold text-gray-800 mb-1';
+              relatedArticleLink.appendChild(relatedArticleTitle);
+
+              const relatedArticleDesc = document.createElement('p');
+              relatedArticleDesc.textContent = article.description;
+              relatedArticleDesc.className = 'text-sm text-gray-600 line-clamp-2';
+              relatedArticleLink.appendChild(relatedArticleDesc);
+
+              relatedArticlesList.appendChild(relatedArticleLink);
+            });
+        }
+
+      } catch (error) {
+        console.error('Error fetching related articles:', error);
+        document.getElementById('related-articles-list').innerHTML = '<p class="text-center text-red-500 text-sm">Gagal memuat artikel terkait.</p>';
+      }
+    }
+
+    // Panggil fungsi saat DOM selesai dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+      const articleId = getArticleIdFromUrl();
+      if (articleId) {
+        fetchArticleDetail(articleId);
+        fetchRelatedArticles(articleId); // Panggil juga untuk artikel terkait
+      } else {
+        document.getElementById('article-title').textContent = 'ID Artikel Tidak Ditemukan';
+        document.getElementById('article-content').innerHTML = '<p class="text-center text-red-500 text-lg">ID artikel tidak disediakan di URL.</p>';
+        document.getElementById('related-articles-list').innerHTML = '<p class="text-center text-red-500 text-sm">Tidak dapat memuat artikel terkait tanpa ID artikel.</p>';
+      }
+    });
+  </script>
+</body>
+</html>

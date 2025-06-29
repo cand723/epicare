@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel - Epicare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="flex min-h-screen">
+    <!-- Sidebar -->
+    <div id="sidebar" class="w-20 h-full text-white p-4 flex flex-col justify-center fixed">
+        <div class="my-8 flex justify-center">
+            <img src="assets/logo.svg" alt="Epicare Logo" class="h-8">
+        </div>
+        
+        <nav class="flex-1 mt-8">
+            <div class="mt-8">
+                <ul class="space-y-10">
+                    <li>
+                        <a href="index.html" class="flex items-center justify-center p-2 rounded bg-white w-12 h-12 mx-auto shadow-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 24 24" stroke-width="1.5" stroke="green" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="artikel.html" class="flex items-center justify-center p-2 rounded bg-green-600 w-12 h-12 mx-auto shadow-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analisis.html" class="flex items-center justify-center p-2 rounded bg-white w-12 h-12 mx-auto shadow-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 24 24" stroke-width="1.5" stroke="green" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div> 
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8 ml-20">
+        <!-- Search Bar Section -->
+        <div class="max-w-3xl mx-auto mb-8 mt-8">
+            <div class="flex items-center gap-4">
+                <div class="relative flex-1">
+                    <input 
+                        type="text" 
+                        placeholder="Search articles..." 
+                        class="w-full text-black pl-4 pr-10 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    >
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+                <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-3 rounded-lg transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
+                      </svg>
+                      
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-3xl mx-auto">            
+            <div class="mb-8">
+                <div class="flex space-x-4 mb-6">
+                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Medicine</span>
+                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">News</span>
+                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Physical Activities</span>
+                </div>
+            </div>
+
+            <!-- Article Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Large Left Article -->
+                <div class="lg:col-span-2 bg-white rounded-lg shadow overflow-hidden">
+                    <div class="relative">
+                        <img src="https://asset.kompas.com/crops/wn7H461ukUjoP3_W-FCBzce9XL8=/167x2:1000x558/1200x800/data/photo/2019/09/27/5d8e22412e9f0.jpg" alt="Health Article" class="object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white mb-2">Gaya Hidup yang Mencegah TBC Sejak Dini!</h3>
+                            <p class="text-gray-200">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column (2 small articles) -->
+                <div class="space-y-10">
+                    <!-- Top Small Article -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="relative">
+                            <img src="https://asset.kompas.com/crops/Qc8PGjZUyeinw5a9dOiDjOKl7ZI=/0x0:1000x667/1200x800/data/photo/2022/05/15/6280f7d231bd6.jpg" alt="Nutrition Article" class="object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                <h3 class="text-xl font-bold text-white mb-1">Makanan Sehat Itu Enak</h3>
+                                <p class="text-gray-200 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bottom Small Article -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="relative">
+                            <img src="https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2021/06/21081543/Paru-paru-1.jpg" alt="Lung Health Article" class="object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                <h3 class="text-xl font-bold text-white mb-1">Waspada Paru-Paru Berjamur</h3>
+                                <p class="text-gray-200 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        document.querySelector('button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('input').value;
+            if (searchTerm.trim() !== '') {
+                alert(`Searching for: ${searchTerm}`);
+                // Here you would typically implement actual search functionality
+            }
+        });
+        
+        // Allow search on Enter key
+        document.querySelector('input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('button').click();
+            }
+        });
+    </script>
+</body>
+</html>

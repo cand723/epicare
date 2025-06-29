@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account - Epicare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Custom styles for the modal transition */
+        #popupModal {
+            transition: opacity 0.25s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800 overflow-x-hidden min-h-screen">
+    <div class="flex flex-col lg:flex-row w-full min-h-screen">
+        <div class="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 py-6">
+            <div class="absolute top-4 left-4">
+                <img src="img/epicare-logo.png" alt="logo" class="w-8 h-8" />
+            </div>
+            <div class="flex flex-col justify-center items-center w-full max-w-md h-full">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-teal-600 drop-shadow-lg">Create your Account</h2>
+                <p class="text-sm md:text-base text-center mb-6 text-gray-600">Welcome to Epicare - Let’s enter your details</p>
+
+                <form action="/register" method="POST" class="space-y-4 text-sm sm:text-base w-full">
+                    <div>
+                        <label for="name" class="block mb-2 text-gray-700 font-medium">Name*</label>
+                        <input type="text" name="name" placeholder="Enter your name" required
+                            class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 text-gray-900 shadow-inner" />
+                    </div>
+
+                    <div>
+                        <label for="gender" class="block mb-2 text-gray-700 font-medium">Gender*</label>
+                        <select name="gender" required
+                            class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 text-gray-900 shadow-inner">
+                            <option value="">Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="date" class="block mb-2 text-gray-700 font-medium">Date of Birth*</label>
+                        <input type="date" name="date" required
+                            class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 text-gray-900 shadow-inner" />
+                    </div>
+
+                    <div>
+                        <label for="email" class="block mb-2 text-gray-700 font-medium">Email*</label>
+                        <input type="email" name="email" placeholder="Enter your email" required
+                            class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 text-gray-900 shadow-inner" />
+                    </div>
+
+                    <div>
+                        <label for="password" class="block mb-2 text-gray-700 font-medium">Password*</label>
+                        <input type="password" name="password" placeholder="Enter your password" required
+                            class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 text-gray-900 shadow-inner" />
+                    </div>
+
+                    <div class="flex items-start gap-2 text-xs sm:text-sm text-gray-700">
+                        <input type="checkbox" name="terms" class="mt-1 accent-green-500 w-4 h-4" required />
+                        <label for="terms">I agree to <a href="#" class="underline text-green-600 hover:text-green-700">Terms</a> and <a href="#" class="underline text-green-600 hover:text-green-700">Privacy Policy</a></label>
+                    </div>
+
+                    <button type="submit"
+                        class="bg-green-500 hover:bg-green-600 text-white font-semibold text-base w-full py-3 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                        Sign Up
+                    </button>
+                </form>
+            </div>
+
+            <div class="mt-auto w-full max-w-md mx-auto flex justify-between text-xs sm:text-sm opacity-80 px-4 pt-6">
+                <a href="#" class="text-gray-600 hover:text-gray-800">Terms of Use | Privacy Policy</a>
+                <a href="login.html" class="text-gray-600 hover:text-gray-800">Already have an account? <span class="underline text-green-600 hover:text-green-700">Login</span></a>
+            </div>
+        </div>
+
+        <div class="right-section w-full lg:w-1/2 flex justify-center items-center p-6 bg-gradient-to-br from-green-500 to-teal-600 rounded-l-3xl shadow-lg">
+            <img src="./img/login-info.png" class="w-full sm:w-10/12 md:w-8/12 object-contain" alt="Login Info">
+        </div>
+    </div>
+
+    <div id="popupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none">
+        <div class="bg-white rounded-lg p-6 max-w-sm w-full text-gray-900 shadow-lg">
+            <p id="popupMessage" class="mb-4"></p>
+            <button id="popupOkBtn" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg w-full">OK</button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-200">
+        <div class="flex flex-col items-center">
+            <svg class="animate-spin h-12 w-12 text-green-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+            <span class="text-white text-lg font-semibold">Processing...</span>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector("form");
+        const popupModal = document.getElementById("popupModal");
+        const popupMessage = document.getElementById("popupMessage");
+        const popupOkBtn = document.getElementById("popupOkBtn");
+        const loadingOverlay = document.getElementById("loadingOverlay");
+
+        function showLoading(show) {
+            if (show) {
+                loadingOverlay.classList.remove("opacity-0", "pointer-events-none");
+                loadingOverlay.classList.add("opacity-100", "pointer-events-auto");
+            } else {
+                loadingOverlay.classList.add("opacity-0", "pointer-events-none");
+                loadingOverlay.classList.remove("opacity-100", "pointer-events-auto");
+            }
+        }
+
+        function showPopup(message, callback) {
+            popupMessage.textContent = message;
+            popupModal.classList.remove("opacity-0", "pointer-events-none");
+            popupModal.classList.add("opacity-100", "pointer-events-auto");
+
+            // Remove any existing click listeners to prevent multiple calls
+            popupOkBtn.replaceWith(popupOkBtn.cloneNode(true));
+            const newPopupOkBtn = document.getElementById("popupOkBtn");
+
+            function onOk() {
+                popupModal.classList.add("opacity-0", "pointer-events-none");
+                popupModal.classList.remove("opacity-100", "pointer-events-auto");
+                if (callback) callback();
+            }
+
+            newPopupOkBtn.addEventListener("click", onOk);
+        }
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            showLoading(true); // Tampilkan loading saat submit
+
+            const formData = new FormData(form);
+            const data = {
+                name: formData.get("name"),
+                gender: formData.get("gender"),
+                date: formData.get("date"),
+                email: formData.get("email"),
+                password: formData.get("password"),
+            };
+
+            try {
+                const res = await fetch("https://epicare-fullstack.onrender.com/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                const responseData = await res.json();
+                console.log("Register response message:", responseData.message);
+
+                if (!res.ok) {
+                    showPopup(`Error: ${responseData.detail || 'Unknown error'}`);
+                    return;
+                }
+
+                showPopup(responseData.message || "Akun berhasil dibuat!", () => {
+                    window.location.href = "login.html";
+                });
+            } catch (err) {
+                console.error(err);
+                showPopup("Terjadi kesalahan saat registrasi.");
+            } finally {
+                showLoading(false); // Sembunyikan loading setelah selesai
+            }
+        });
+    </script>
+    
+</body>
+
+</html>

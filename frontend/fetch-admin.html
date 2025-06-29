@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Epicare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* Mengatur font default untuk body */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1a1a1a;
+            /* Warna teks default */
+        }
+
+        /* Custom scrollbar for the modal and other scrollable elements */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e0;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Efek zoom pada gambar saat hover di kartu artikel */
+        .article-card-hover:hover .article-image-zoom {
+            transform: scale(1.08);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-green-100 via-blue-50 to-purple-50 min-h-screen text-gray-900 p-3 sm:p-4">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden p-5 sm:p-6 border border-gray-100">
+        <div class="flex flex-col sm:flex-row items-center justify-between mb-6 pb-3 border-b border-gray-200">
+            <h1
+                class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600 mb-3 sm:mb-0 drop-shadow-lg">
+                Admin Dashboard</h1>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <button id="openModalBtn"
+                    class="px-5 py-2.5 bg-gradient-to-r from-green-500 to-teal-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 text-sm">
+                    <span class="mr-1">+</span> Tambah Artikel Baru
+                </button>
+                <button id="adminLogoutBtn"
+                    class="px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 text-sm">
+                    Logout Admin
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <input type="text" id="searchAdminArticles" placeholder="Cari artikel berdasarkan judul atau deskripsi..."
+                class="w-full px-5 py-2.5 rounded-full border border-gray-200 focus:ring-4 focus:ring-green-400 focus:border-transparent text-gray-800 placeholder-gray-400 shadow-md transition-all duration-300 drop-shadow-sm outline-none text-sm" />
+        </div>
+
+        <div id="articlesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            </div>
+    </div>
+
+    <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 hidden z-50 p-3">
+        <div id="modal-content"
+            class="bg-white rounded-xl shadow-2xl w-full max-w-xl p-5 sm:p-6 space-y-5 relative max-h-[85vh] overflow-y-auto custom-scrollbar transform scale-95 opacity-0 transition-all duration-300 ease-out">
+            <button id="closeModalBtn"
+                class="absolute top-3 right-3 text-gray-500 hover:text-gray-900 text-2xl font-light leading-none focus:outline-none">&times;</button>
+            <h2 id="modalTitle" class="text-2xl font-bold text-gray-800 mb-3">Tambah Artikel Baru</h2>
+            <form id="articleForm" class="space-y-4">
+                <input type="hidden" name="edit_id" id="edit_id" />
+                <div>
+                    <label for="author" class="block text-base font-semibold text-gray-700 mb-1">Author:</label>
+                    <input type="text" id="author" required name="author"
+                        class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 text-sm"
+                        placeholder="Nama Penulis">
+                </div>
+                <div>
+                    <label for="title" class="block text-base font-semibold text-gray-700 mb-1">Judul Artikel:</label>
+                    <input type="text" id="title" required name="title"
+                        class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 text-sm"
+                        placeholder="Judul Artikel Anda">
+                </div>
+                <div>
+                    <label for="url_to_image" class="block text-base font-semibold text-gray-700 mb-1">Gambar Artikel
+                        (link):</label>
+                    <input type="url" id="url_to_image" required name="url_to_image"
+                        class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 text-sm"
+                        placeholder="https://example.com/gambar.jpg">
+                </div>
+                <div>
+                    <label for="url" class="block text-base font-semibold text-gray-700 mb-1">URL Artikel (opsional):</label>
+                    <input type="text" id="url" name="url"
+                        class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 text-sm"
+                        placeholder="https://example.com/artikel-lengkap">
+                </div>
+                <div>
+                    <label for="description" class="block text-base font-semibold text-gray-700 mb-1">Deskripsi Singkat:</label>
+                    <textarea id="description" name="description" rows="2"
+                        class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 text-sm"
+                        placeholder="Ringkasan singkat artikel Anda"></textarea>
+                </div>
+                <div>
+                    <label for="content" class="block text-base font-semibold text-gray-700 mb-1">Isi Konten Artikel:</label>
+                    <textarea id="content" required name="content" rows="5"
+                        class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 text-sm"
+                        placeholder="Tulis isi artikel lengkap di sini"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-3">
+                    <button type="button" id="cancelBtn"
+                        class="px-5 py-2.5 bg-gray-300 text-gray-800 font-semibold rounded-lg hover:bg-gray-400 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-75 text-sm">
+                        Batal
+                    </button>
+                    <button type="submit"
+                        class="px-5 py-2.5 bg-gradient-to-r from-green-500 to-teal-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 text-sm">
+                        Simpan Artikel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="messageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 hidden z-50 p-3">
+        <div
+            class="bg-white rounded-xl shadow-2xl w-full max-w-xs p-5 space-y-4 relative transform scale-95 opacity-0 transition-all duration-300 ease-out">
+            <h3 id="messageModalTitle" class="text-lg font-bold text-gray-800"></h3>
+            <p id="messageModalContent" class="text-gray-700 text-sm"></p>
+            <div class="flex justify-end space-x-2">
+                <button id="messageModalCancelBtn"
+                    class="px-3 py-1.5 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-200 ease-in-out hidden text-sm">Batal</button>
+                <button id="messageModalConfirmBtn"
+                    class="px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200 ease-in-out text-sm">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiBase = "https://epicare-fullstack.onrender.com"; // Your API base URL
+        let allAdminArticles = []; // Global variable to store all articles
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("modal");
+            const modalContent = document.getElementById("modal-content");
+            const openBtn = document.getElementById("openModalBtn");
+            const closeBtn = document.getElementById("closeModalBtn");
+            const cancelBtn = document.getElementById("cancelBtn");
+            const form = document.getElementById("articleForm");
+            const modalTitle = document.getElementById("modalTitle");
+            const editIdInput = document.getElementById("edit_id");
+            const articlesList = document.getElementById("articlesList");
+            const adminLogoutBtn = document.getElementById("adminLogoutBtn");
+            const searchAdminArticlesInput = document.getElementById("searchAdminArticles");
+
+            // Message Modal elements
+            const messageModal = document.getElementById("messageModal");
+            const messageModalTitle = document.getElementById("messageModalTitle");
+            const messageModalContent = document.getElementById("messageModalContent");
+            const messageModalConfirmBtn = document.getElementById("messageModalConfirmBtn");
+            const messageModalCancelBtn = document.getElementById("messageModalCancelBtn");
+
+            let resolveMessageModalPromise;
+
+            /**
+             * Displays a custom message modal.
+             * @param {string} title - The title of the message.
+             * @param {string} content - The content of the message.
+             * @param {boolean} isConfirm - If true, shows a "Cancel" button and returns a Promise.
+             * @returns {Promise<boolean>|void} - A Promise resolving to true for "OK" and false for "Cancel" if isConfirm is true.
+             */
+            function showMessageModal(title, content, isConfirm = false) {
+                messageModalTitle.textContent = title;
+                messageModalContent.textContent = content;
+                messageModalCancelBtn.classList.toggle('hidden', !isConfirm);
+                messageModalConfirmBtn.textContent = isConfirm ? 'Ya' : 'OK';
+
+                messageModal.classList.remove("hidden");
+                // Animate modal in
+                setTimeout(() => {
+                    messageModal.querySelector('div').classList.remove('scale-95', 'opacity-0');
+                    messageModal.querySelector('div').classList.add('scale-100', 'opacity-100');
+                }, 10);
+
+                if (isConfirm) {
+                    return new Promise(resolve => {
+                        resolveMessageModalPromise = resolve;
+                        messageModalConfirmBtn.onclick = () => {
+                            messageModal.querySelector('div').classList.remove('scale-100', 'opacity-100');
+                            messageModal.querySelector('div').classList.add('scale-95', 'opacity-0');
+                            setTimeout(() => messageModal.classList.add("hidden"), 300);
+                            resolve(true);
+                        };
+                        messageModalCancelBtn.onclick = () => {
+                            messageModal.querySelector('div').classList.remove('scale-100', 'opacity-100');
+                            messageModal.querySelector('div').classList.add('scale-95', 'opacity-0');
+                            setTimeout(() => messageModal.classList.add("hidden"), 300);
+                            resolve(false);
+                        };
+                    });
+                } else {
+                    messageModalConfirmBtn.onclick = () => {
+                        messageModal.querySelector('div').classList.remove('scale-100', 'opacity-100');
+                        messageModal.querySelector('div').classList.add('scale-95', 'opacity-0');
+                        setTimeout(() => messageModal.classList.add("hidden"), 300);
+                    };
+                }
+            }
+
+            // Open/close modal
+            /**
+             * Opens the article form modal.
+             * @param {boolean} isEdit - True if opening for editing, false for adding.
+             * @param {Object|null} article - The article data if in edit mode.
+             */
+            function openModal(isEdit = false, article = null) {
+                modal.classList.remove("hidden");
+                // Animate modal in
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+
+                if (isEdit && article) {
+                    console.log("openModal: Editing article:", article); // DEBUG
+                    modalTitle.textContent = "Edit Artikel";
+                    form.author.value = article.author;
+                    form.title.value = article.title;
+                    form.url_to_image.value = article.url_to_image;
+                    form.url.value = article.url || "";
+                    form.description.value = article.description || "";
+                    form.content.value = article.content;
+                    editIdInput.value = article.id;
+                } else {
+                    console.log("openModal: Adding new article."); // DEBUG
+                    modalTitle.textContent = "Tambah Artikel Baru";
+                    form.reset();
+                    editIdInput.value = "";
+                }
+            }
+
+            /**
+             * Closes the article form modal.
+             */
+            function closeModal() {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add("hidden");
+                    form.reset();
+                    editIdInput.value = "";
+                }, 300); // Match animation duration
+            }
+
+            openBtn.addEventListener("click", () => openModal(false));
+            closeBtn.addEventListener("click", closeModal);
+            cancelBtn.addEventListener("click", closeModal);
+
+            // Admin Logout functionality
+            adminLogoutBtn.addEventListener("click", async () => {
+                const confirmed = await showMessageModal("Konfirmasi Logout", "Apakah Anda yakin ingin logout?", true);
+                if (confirmed) {
+                    try {
+                        if (true) {
+                            sessionStorage.removeItem('adminUser'); // Clear admin session storage
+                            window.location.href = 'login-admin.html'; // Redirect to admin login page
+                        } else {
+                            showMessageModal("Error!", "Gagal logout. Silakan coba lagi.");
+                        }
+                    } catch (error) {
+                        console.error("Error during admin logout:", error);
+                        showMessageModal("Error!", "Terjadi kesalahan saat logout.");
+                    }
+                }
+            });
+
+
+            /**
+             * Fetches all articles from the API and stores them.
+             * Then, it calls renderAdminArticles to display them (filtered by search).
+             */
+            async function fetchAllAdminArticles() {
+                console.log("fetchAllAdminArticles: Fetching articles..."); // DEBUG
+                try {
+                    const res = await fetch(`${apiBase}/admin-article`);
+                    if (!res.ok) {
+                        console.error(`fetchAllAdminArticles: HTTP error! status: ${res.status}`); // DEBUG
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    allAdminArticles = await res.json(); // Store all articles
+                    console.log("fetchAllAdminArticles: Articles fetched:", allAdminArticles); // DEBUG
+                    renderAdminArticles(); // Render articles (with current filter)
+                } catch (err) {
+                    console.error("fetchAllAdminArticles: Failed to fetch articles:", err); // DEBUG
+                    articlesList.innerHTML = `<p class="text-red-500 text-center py-8 col-span-full">Gagal memuat artikel. Pastikan server API berjalan.</p>`;
+                }
+            }
+
+            /**
+             * Renders articles based on the current search term from the allAdminArticles array.
+             * This function is called on initial load and whenever the search input changes.
+             */
+            function renderAdminArticles() {
+                console.log("renderAdminArticles: Rendering articles..."); // DEBUG
+                const searchTerm = searchAdminArticlesInput.value.toLowerCase();
+
+                const filteredArticles = allAdminArticles.filter(article => {
+                    return article.title.toLowerCase().includes(searchTerm) ||
+                           (article.description && article.description.toLowerCase().includes(searchTerm)); // Handle null/undefined description
+                });
+
+                if (filteredArticles.length === 0) {
+                    articlesList.innerHTML = `<p class="text-gray-600 text-center py-8 col-span-full">Tidak ada artikel yang ditemukan.</p>`;
+                    return;
+                }
+
+                articlesList.innerHTML = filteredArticles.map(article => `
+                    <div class="group block bg-white rounded-2xl shadow-lg p-5 overflow-hidden article-card-hover border border-gray-100">
+                        <img src="${article.url_to_image}" alt="${article.title}" class="w-full h-40 object-cover rounded-lg mb-4 shadow-md article-image-zoom transition-transform duration-300" onerror="this.onerror=null;this.src='https://placehold.co/600x400/E0F2F7/000000?text=Gambar+Tidak+Tersedia';">
+                        <div class="p-0">
+                            <h2 class="text-lg font-bold text-gray-900 mb-1.5 leading-snug group-hover:text-green-600 transition-colors duration-200">${article.title}</h2>
+                            <p class="text-xs text-gray-600 mb-2.5">Oleh: <span class="font-medium">${article.author}</span></p>
+                            <p class="text-sm text-gray-700 mb-3 line-clamp-3">${article.description || "Tidak ada deskripsi."}</p>
+                            ${article.url ? `<a href="${article.url}" target="_blank" class="text-blue-600 hover:text-blue-800 font-semibold text-xs inline-flex items-center">Baca Selengkapnya 
+                                <svg class="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>` : ''}
+                            <div class="flex gap-1.5 mt-3">
+                                <button class="edit-btn px-3.5 py-1.5 bg-yellow-500 text-white rounded-md shadow-md hover:bg-yellow-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-xs" data-id="${article.id}" title="Edit Artikel">
+                                    <i class="fa-solid fa-edit"></i> Edit
+                                </button>
+                                <button class="delete-btn px-3.5 py-1.5 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 text-xs" data-id="${article.id}" title="Hapus Artikel">
+                                    <i class="fa-solid fa-trash-alt"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join("");
+
+                // Re-attach event listeners for edit/delete buttons after re-rendering
+                attachArticleEventListeners();
+                console.log("renderAdminArticles: Event listeners re-attached."); // DEBUG
+            }
+
+            /**
+             * Attaches event listeners to dynamically created edit and delete buttons.
+             */
+            function attachArticleEventListeners() {
+                document.querySelectorAll(".edit-btn").forEach(btn => {
+                    btn.addEventListener("click", async (e) => {
+                        const id = btn.getAttribute("data-id");
+                        console.log("Edit button clicked for ID:", id); // DEBUG
+                        const article = allAdminArticles.find(a => a.id === id);
+                        if (article) {
+                            openModal(true, article);
+                        } else {
+                            console.error("Article not found for ID:", id); // DEBUG
+                            showMessageModal("Error", "Artikel tidak ditemukan untuk diedit.");
+                        }
+                    });
+                });
+
+                document.querySelectorAll(".delete-btn").forEach(btn => {
+                    btn.addEventListener("click", async (e) => {
+                        const id = btn.getAttribute("data-id");
+                        console.log("Delete button clicked for ID:", id); // DEBUG
+                        const confirmed = await showMessageModal("Konfirmasi Hapus", "Yakin ingin menghapus artikel ini?", true);
+                        if (confirmed) {
+                            try {
+                                const res = await fetch(`${apiBase}/admin-article/${id}`, {
+                                    method: "DELETE"
+                                });
+                                if (!res.ok) {
+                                    const errorData = await res.json();
+                                    throw new Error(errorData.detail || "Gagal menghapus artikel.");
+                                }
+                                showMessageModal("Berhasil!", "Artikel berhasil dihapus.");
+                                fetchAllAdminArticles(); // Re-fetch all articles to update the list
+                            } catch (err) {
+                                showMessageModal("Error!", `Terjadi kesalahan saat menghapus artikel: ${err.message}`);
+                                console.error(err);
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Initial fetch and setup
+            fetchAllAdminArticles(); // Call the new function to fetch all articles initially
+
+            // Add event listener for the search input for real-time filtering
+            searchAdminArticlesInput.addEventListener('input', renderAdminArticles);
+
+            // Submit form (add or edit)
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                data.url = data.url || ""; // Ensure url is an empty string if not provided
+                data.description = data.description || ""; // Ensure description is an empty string if not provided
+                data.published_at = new Date().toISOString(); // Add published_at
+
+                const isEdit = !!data.edit_id;
+                const url = isEdit
+                    ? `${apiBase}/admin-article/${data.edit_id}`
+                    : `${apiBase}/admin-article`;
+                const method = isEdit ? "PUT" : "POST";
+
+                // Remove edit_id from payload
+                delete data.edit_id;
+
+                try {
+                    const res = await fetch(url, {
+                        method,
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!res.ok) {
+                        const errorData = await res.json();
+                        throw new Error(errorData.detail || (isEdit ? "Gagal mengedit artikel." : "Gagal menambahkan artikel."));
+                    }
+
+                    closeModal();
+                    showMessageModal("Berhasil!", `Artikel berhasil ${isEdit ? 'diperbarui' : 'ditambahkan'}.`);
+                    fetchAllAdminArticles(); // Re-fetch all articles to update the list and apply current filter
+                } catch (err) {
+                    showMessageModal("Error!", `Terjadi kesalahan saat menyimpan artikel: ${err.message}`);
+                    console.error(err);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - Epicare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Custom styles for the modal transition */
+        .modal-enter-active,
+        .modal-leave-active {
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-enter-from,
+        .modal-leave-to {
+            opacity: 0;
+        }
+
+        .modal-content-enter-active,
+        .modal-content-leave-active {
+            transition: transform 0.3s ease;
+        }
+
+        .modal-content-enter-from,
+        .modal-content-leave-to {
+            transform: translateY(-20px);
+        }
+    </style>
+</head>
+
+<body class="bg-white h-screen text-gray-800 overflow-auto">
+    <div class="flex flex-col lg:flex-row w-full min-h-screen">
+        <div class="w-full lg:w-1/2 flex flex-col justify-center items-center px-4 sm:px-8 py-6 min-h-0">
+            <div class="absolute top-4 left-4">
+                <img src="/frontend/img/epicare-logo.png" alt="logo" class="w-8 h-8 rounded-full" />
+            </div>
+            <div class="flex flex-col justify-center items-center w-full max-w-md h-full">
+                <h2
+                    class="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 sm:mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-teal-600 drop-shadow-lg">
+                    Admin Login</h2>
+                <p class="mb-4 sm:mb-6 text-sm sm:text-base lg:text-lg text-center text-gray-600">Please enter your
+                    admin account details</p>
+
+                <form id="loginForm" class="space-y-4 sm:space-y-6 w-full">
+                    <div class="text-left">
+                        <label for="email"
+                            class="block mb-2 sm:mb-3 font-medium text-sm sm:text-base text-gray-700">Email</label>
+                        <input type="email" name="email" placeholder="admin@epicare.com" required
+                            class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 text-gray-900 text-sm sm:text-base shadow-inner" />
+                    </div>
+
+                    <div>
+                        <label for="password"
+                            class="block mb-2 sm:mb-3 font-medium text-sm sm:text-base text-gray-700">Password</label>
+                        <div class="relative">
+                            <input type="password" name="password" id="passwordInput" placeholder="Enter your password"
+                                required
+                                class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 text-gray-900 pr-10 text-sm sm:text-base shadow-inner" />
+                            <span
+                                class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                                id="togglePassword">
+                                <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div id="error-message" class="text-red-500 text-xs sm:text-sm mt-2 hidden"></div>
+
+                    <button type="button" id="loginButton"
+                        class="bg-green-500 hover:bg-green-600 text-white font-semibold text-base sm:text-lg w-full py-2 sm:py-3 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                        Sign In
+                    </button>
+
+                    </form>
+            </div>
+            <div class="mt-auto w-full max-w-md mx-auto flex justify-between text-xs opacity-70 px-4 pt-6">
+                <a href="#" class="text-xs sm:text-sm text-gray-600 hover:text-gray-800">Terms of Use | Privacy
+                    Policy</a>
+            </div>
+        </div>
+
+        <div
+            class="right-section w-full lg:w-1/2 flex justify-center items-center px-4 sm:px-8 py-6 bg-gradient-to-br from-green-500 to-teal-600 rounded-l-3xl shadow-lg">
+            <img src="/frontend/img/login-info.png" class="w-full sm:w-10/12 md:w-8/12 object-contain rounded-lg" alt="Admin Login Info">
+        </div>
+    </div>
+
+    <div id="loadingOverlay"
+        class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-200">
+        <div class="flex flex-col items-center">
+            <svg class="animate-spin h-12 w-12 text-green-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+            <span class="text-white text-lg font-semibold">Processing...</span>
+        </div>
+    </div>
+
+    <div id="customPopupModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-lg p-6 max-w-sm w-full text-gray-900 shadow-lg text-center">
+            <p id="popupMessage" class="mb-4"></p>
+            <button id="popupOkButton"
+                class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg w-full">OK</button>
+        </div>
+    </div>
+
+    <script>
+        const apiBase = "https://epicare-fullstack.onrender.com"; // Sesuaikan dengan URL backend Anda
+
+        // --- UI Utility Functions ---
+        function showLoading(show) {
+            const loadingOverlay = document.getElementById("loadingOverlay");
+            if (show) {
+                loadingOverlay.classList.remove("opacity-0", "pointer-events-none");
+                loadingOverlay.classList.add("opacity-100", "pointer-events-auto");
+            } else {
+                loadingOverlay.classList.add("opacity-0", "pointer-events-none");
+                loadingOverlay.classList.remove("opacity-100", "pointer-events-auto");
+            }
+        }
+
+        function showPopup(message) {
+            const popupModal = document.getElementById('customPopupModal');
+            const popupMessage = document.getElementById('popupMessage');
+            const popupOkButton = document.getElementById('popupOkButton');
+
+            popupMessage.textContent = message;
+            popupModal.classList.remove('opacity-0', 'pointer-events-none');
+            popupModal.classList.add('opacity-100', 'pointer-events-auto');
+
+            popupOkButton.onclick = () => {
+                popupModal.classList.add('opacity-0', 'pointer-events-none');
+                popupModal.classList.remove('opacity-100', 'pointer-events-auto');
+            };
+        }
+
+        // --- Password Visibility Toggle ---
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("passwordInput");
+        const eyeIcon = document.getElementById("eyeIcon");
+
+        togglePassword.addEventListener("click", () => {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            eyeIcon.classList.toggle("fa-eye");
+            eyeIcon.classList.toggle("fa-eye-slash");
+        });
+
+        // --- Login Logic ---
+        document.getElementById('loginButton').addEventListener('click', async () => {
+            const emailInput = document.querySelector('input[name="email"]');
+            const passwordInput = document.querySelector('input[name="password"]');
+            const errorMessageDiv = document.getElementById('error-message');
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!email || !password) {
+                errorMessageDiv.textContent = 'Please enter both email and password.';
+                errorMessageDiv.classList.remove('hidden');
+                return;
+            }
+
+            showLoading(true); // Show loading
+
+            try {
+                // Menggunakan endpoint /admin-login yang Anda berikan
+                const response = await fetch(`${apiBase}/admin-login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json(); // Parse the JSON response
+
+                if (response.ok && data.success) {
+                    // Login successful
+                    errorMessageDiv.textContent = '';
+                    errorMessageDiv.classList.add('hidden');
+                    showPopup(data.message || 'Admin login successful! Redirecting...');
+                    
+                    // Simpan informasi admin ke sessionStorage
+                    sessionStorage.setItem('adminUser', JSON.stringify(data.admin));
+
+                    // Redirect ke halaman admin dashboard
+                    setTimeout(() => {
+                        window.location.href = '/frontend/fetch-admin.html'; // Arahkan ke rute FastAPI
+                    }, 1500); // Adjust delay as needed
+                } else {
+                    // Login failed
+                    const errorMessage = data.message || 'Login failed. Please check your credentials.';
+                    errorMessageDiv.textContent = errorMessage;
+                    errorMessageDiv.classList.remove('hidden');
+                    console.error('Login error:', data);
+                }
+            } catch (error) {
+                console.error('Network or unexpected error:', error);
+                errorMessageDiv.textContent = 'An unexpected error occurred. Please try again.';
+                errorMessageDiv.classList.remove('hidden');
+            } finally {
+                showLoading(false); // Hide loading
+            }
+        });
+
+        // --- Forgot Password Modal Logic (dihapus sesuai permintaan sebelumnya) ---
+        // Variabel dan event listener terkait Forgot Password tetap didefinisikan
+        // tetapi tidak akan dipicu karena tombolnya tidak ada di HTML.
+        // Jika Anda ingin menghapus sepenuhnya, hapus juga div modal dan script terkait.
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const cancelResetBtn = document.getElementById('cancelResetBtn');
+        const sendResetLinkBtn = document.getElementById('sendResetLinkBtn');
+        const resetEmailInput = document.getElementById('resetEmail');
+        const resetEmailError = document.getElementById('resetEmailError');
+
+        // Mengosongkan event listener untuk tombol yang tidak ada, atau menghapus variabel jika tidak diperlukan
+        if (forgotPasswordBtn) forgotPasswordBtn.addEventListener('click', () => showPopup('Fitur reset password tidak tersedia untuk admin.'));
+        if (cancelResetBtn) cancelResetBtn.addEventListener('click', () => console.log('Cancel reset clicked.'));
+        if (sendResetLinkBtn) sendResetLinkBtn.addEventListener('click', () => showPopup('Fitur reset password tidak tersedia untuk admin.'));
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Epicare Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    /* Animasi hover untuk kartu */
+    .card {
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .card:hover {
+      transform: translateY(-5px); /* Sedikit naik saat dihover */
+      box-shadow: 0 12px 28px rgba(0, 128, 0, 0.15); /* Bayangan lebih besar */
+    }
+    /* Animasi fade-in untuk elemen saat dimuat */
+    .fade-in {
+      animation: fadeInUp 0.5s ease-out forwards; /* Durasi lebih cepat */
+      opacity: 0;
+      transform: translateY(10px); /* Jarak lebih pendek */
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Transisi hover untuk tombol */
+    button, .action-button { /* Menambahkan .action-button untuk tautan yang difungsikan seperti tombol */
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+      position: relative; /* Diperlukan untuk efek ripple */
+      overflow: hidden; /* Memastikan ripple tetap di dalam tombol */
+    }
+
+    button:hover, .action-button:hover {
+      background-color: #22c55e; /* Warna hijau yang lebih terang */
+      color: white;
+      border-color: #22c55e; /* Mengubah warna border juga saat hover */
+    }
+    /* Gaya untuk efek ripple */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5); /* Warna putih semi-transparan */
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-white text-gray-800">
+  <div id="navbar-placeholder"></div>
+
+  <main class="px-6 md:px-10 py-12 space-y-16">
+    <section class="flex flex-col md:flex-row items-center gap-10 fade-in py-11 relative">
+      <!-- Gambar Hero Illustration dikembalikan ke tautan asli -->
+      <img src="./img/hero-illustration.png" alt="Hero Illustration" class="w-full md:w-2/6 max-w-sm rounded-lg shadow-lg"/>
+      <div>
+        <h1 class="text-4xl font-bold text-gray-800">Halo, Pengguna Epicare! Apa Kabarmu Hari Ini?</h1>
+        <p class="text-gray-500 mt-2">
+          Terus semangat jaga kesehatan!
+        </p>
+        <!-- Search Bar telah dihapus -->
+        <div class="flex flex-wrap gap-3 mt-6">
+          <a href="./sistem_analisis.html" class="action-button bg-green-600 text-white px-5 py-2 rounded-full font-medium shadow hover:bg-green-700 transition flex items-center gap-2">
+            <i class="fas fa-stethoscope"></i> Analisis Gejala
+          </a>
+          <a href="./chatbot.html" class="action-button bg-white border border-gray-300 text-gray-700 px-5 py-2 rounded-full font-medium hover:border-green-500 hover:text-green-600 transition flex items-center gap-2">
+            <i class="fas fa-comment-dots"></i> Chatbot
+          </a>
+          <a href="./analisis-rontgen.html" class="action-button bg-green-600 text-white px-5 py-2 rounded-full font-medium shadow hover:bg-green-700 transition flex items-center gap-2">
+            <i class="fas fa-x-ray"></i> Analisis Rontgen
+          </a>
+          <a href="./article-list.html" class="action-button bg-white border border-gray-300 text-gray-700 px-5 py-2 rounded-full font-medium hover:border-green-500 hover:text-green-600 transition flex items-center gap-2">
+            <i class="fas fa-newspaper"></i> Artikel Kesehatan
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Kartu Tips Kesehatan Harian (Menggabungkan dan Memperluas) -->
+      <div class="lg:col-span-2 bg-white rounded-xl shadow-md p-6 card fade-in flex flex-col">
+        <h3 class="font-semibold text-xl mb-4 text-green-700">Kesehatan Anda Hari Ini <i class="fas fa-heartbeat text-green-600"></i></h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 flex-grow">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-tint text-green-600 text-2xl mt-1"></i>
+            <div>
+              <p class="font-medium text-lg">Minum Air Putih Cukup</p>
+              <p class="text-sm text-gray-600">Pastikan Anda minum setidaknya 8 gelas air setiap hari untuk hidrasi optimal.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-bed text-green-600 text-2xl mt-1"></i>
+            <div>
+              <p class="font-medium text-lg">Istirahat Berkualitas</p>
+              <p class="text-sm text-gray-600">Tidur 7-9 jam setiap malam membantu tubuh pulih dan meningkatkan konsentrasi.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-running text-green-600 text-2xl mt-1"></i>
+            <div>
+              <p class="font-medium text-lg">Gerak Aktif Setiap Hari</p>
+              <p class="text-sm text-gray-600">Lakukan setidaknya 30 menit olahraga ringan seperti jalan kaki atau peregangan.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <i class="fas fa-apple-alt text-green-600 text-2xl mt-1"></i>
+            <div>
+              <p class="font-medium text-lg">Gizi Seimbang</p>
+              <p class="text-sm text-gray-600">Prioritaskan buah, sayur, dan protein tanpa lemak dalam setiap makanan Anda.</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 text-center">
+          <a href="./article-list.html" class="bg-green-500 text-white px-5 py-2 rounded-full hover:bg-green-600 transition inline-flex items-center gap-2">
+            Pelajari Lebih Lanjut <i class="fas fa-arrow-right text-sm"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Kartu Tahukah Kamu? (Dinamis) -->
+      <div class="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center card fade-in">
+        <h3 class="font-semibold text-xl mb-4 text-green-700">Tahukah Kamu? <i class="fas fa-lightbulb text-green-600"></i></h3>
+        <!-- Gambar Icon Lampu dikembalikan ke tautan asli -->
+        <img src="./img/icon-lamp.png" class="w-20 h-20 mb-4" alt="Icon Lamp"/>
+        <p id="dynamic-fact" class="text-sm text-gray-600 mb-6 min-h-[60px] flex items-center justify-center">Fakta menarik seputar kesehatan akan muncul di sini!</p>
+        <a href="./article-list.html" class="bg-green-500 text-white px-5 py-2 rounded-full hover:bg-green-600 transition inline-flex items-center gap-2">
+          Lihat Artikel Lain <i class="fas fa-arrow-right text-sm"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-12 py-8 px-6 md:px-10 text-sm text-gray-600 text-center">
+    <div class="max-w-screen-xl mx-auto space-y-6">
+      <div class="flex items-center justify-center gap-2">
+        <span class="text-green-600 font-bold text-xl">Epicare</span>
+        <span class="text-gray-400 text-xs">&copy; 2025</span>
+      </div>
+      <p class="text-gray-700">Semua hak dilindungi. Solusi kesehatan cerdas untuk Anda.</p>
+      <div class="flex justify-center flex-wrap gap-6 text-base">
+        <a href="#" class="hover:text-green-600 transition">Kebijakan Privasi</a>
+        <a href="#" class="hover:text-green-600 transition">Syarat & Ketentuan</a>
+        <a href="#" class="hover:text-green-600 transition">Kontak Kami</a>
+        <a href="#" class="hover:text-green-600 transition">Pusat Bantuan</a>
+      </div>
+      <div class="flex justify-center gap-5 text-xl mt-4">
+        <a href="#" class="text-gray-500 hover:text-green-600 transition"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="text-gray-500 hover:text-green-600 transition"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="text-gray-500 hover:text-green-600 transition"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="text-gray-500 hover:text-green-600 transition"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <p class="text-xs text-gray-400 mt-4">
+        <i class="fas fa-shield-alt text-green-500"></i> Data Anda Aman Bersama Epicare.
+      </p>
+    </div>
+  </footer>
+  <script>
+    // Load navbar.html content into the placeholder div
+    fetch('navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-placeholder').innerHTML = data;
+        // Reattach menu toggle event listener after loading navbar
+        const menuToggle = document.getElementById('menu-toggle');
+        if (menuToggle) {
+          menuToggle.addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) {
+              mobileMenu.classList.toggle('hidden');
+            }
+          });
+        }
+        // Add hover effect to navbar links (assuming navbar.html has 'nav-link' class)
+        document.querySelectorAll('#navbar-placeholder a').forEach(link => {
+            link.addEventListener('mouseover', () => link.classList.add('underline'));
+            link.addEventListener('mouseout', () => link.classList.remove('underline'));
+        });
+      })
+      .catch(error => console.error('Error loading navbar:', error));
+
+    // JavaScript untuk efek ripple pada tombol dan tautan yang difungsikan sebagai tombol
+    const interactiveElements = document.querySelectorAll('button, .action-button');
+
+    interactiveElements.forEach(element => {
+      element.addEventListener('click', function (e) {
+        const circle = document.createElement('span');
+        const diameter = Math.max(this.clientWidth, this.clientHeight);
+        const radius = diameter / 2;
+
+        // Mengatur posisi dan ukuran lingkaran ripple
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${e.clientX - this.getBoundingClientRect().left - radius}px`;
+        circle.style.top = `${e.clientY - this.getBoundingClientRect().top - radius}px`;
+        circle.classList.add('ripple');
+
+        // Menghapus ripple sebelumnya jika ada untuk mencegah tumpukan
+        const ripple = this.querySelector('.ripple');
+        if (ripple) {
+          ripple.remove();
+        }
+
+        // Menambahkan elemen ripple ke tombol
+        this.appendChild(circle);
+      });
+    });
+
+    // Dynamic "Tahukah Kamu?" facts
+    const facts = [
+      "Tertawa dapat meningkatkan aliran darah dan mengurangi stres.",
+      "Mendengarkan musik favorit Anda dapat menurunkan tekanan darah.",
+      "Berjemur di pagi hari membantu tubuh memproduksi Vitamin D.",
+      "Mengonsumsi brokoli secara teratur dapat membantu mencegah kanker.",
+      "Cokelat hitam dengan 70% kakao atau lebih baik untuk jantung.",
+      "Kurang tidur bisa membuat Anda lebih lapar dari biasanya."
+    ];
+    const dynamicFactElement = document.getElementById('dynamic-fact');
+    if (dynamicFactElement) {
+      const randomIndex = Math.floor(Math.random() * facts.length);
+      dynamicFactElement.textContent = facts[randomIndex];
+    }
+
+    // Kode Dark Mode telah dihapus
+    // Event listener untuk fade-in animation saat dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.fade-in').forEach((element, index) => {
+            element.style.animationDelay = `${index * 0.1}s`;
+            element.style.opacity = '1'; // Memastikan terlihat setelah animasi
+            element.style.transform = 'translateY(0)';
+        });
+    });
+  </script>
+</body>
+</html>

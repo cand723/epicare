@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landing Page - Epicare</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style/style.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff; /* White background */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #1a202c; /* Dark text for contrast on white background */
+      scroll-behavior: smooth;
+    }
+
+    /* Custom styles for glassmorphism effect */
+    .glass {
+      background-color: rgba(255, 255, 255, 0.8); /* Slightly more opaque white for glass effect */
+      backdrop-filter: blur(15px); /* Stronger blur effect */
+      border: 1px solid rgba(220, 220, 220, 0.7); /* Subtle border for white background */
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.08); /* Softer, wider shadow */
+    }
+
+    /* Custom styles for card hover effect */
+    .card:hover {
+      transform: translateY(-8px) scale(1.02); /* Slightly less pronounced lift and enlarge */
+      box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+      border-color: rgba(16, 185, 129, 0.8); /* Green-500 border on hover */
+    }
+  </style>
+</head>
+
+<body class="flex flex-col">
+  <div id="navbar-placeholder" class="flex-shrink-0 h-16"></div>
+  <!-- <script>
+    fetch('./navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-placeholder').innerHTML = data;
+      })
+      .catch(error => console.error('Error loading navbar:', error));
+  </script> -->
+
+  <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section class="mb-16 text-center relative">
+      <h1 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-700 drop-shadow-lg animate-fade-in-down">Selamat Datang di Epicare</h1>
+      <p class="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed animate-fade-in delay-200">
+        Website ini dikembangkan sebagai platform informasi kesehatan yang berfokus pada edukasi serta sistem analisis mengenai tuberkulosis (TBC). Platform ini bertujuan untuk menyediakan informasi yang valid, akurat, dan mudah diakses oleh masyarakat luas guna meningkatkan pemahaman tentang TBC, mulai dari penyebab, gejala, hingga metode pencegahan dan pengobatannya.
+      </p>
+      <div class="flex justify-center px-6 pt-8 mt-10 animate-fade-in delay-400">
+        <a href="./login.html" class="inline-block bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-extrabold px-10 py-4 rounded-full shadow-xl transform hover:scale-105 transition duration-300 ease-in-out tracking-wide">
+          Login Sekarang <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+      <div class="glass p-10 rounded-3xl shadow-xl mt-20 max-w-4xl mx-auto text-left text-gray-800 border border-gray-200 transform scale-95 animate-fade-in delay-600">
+        <h2 class="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-teal-500">Tentang Tuberkulosis (TBC)</h2>
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <p class="mb-5 text-base leading-relaxed">
+                Tuberkulosis (TBC) adalah penyakit infeksi yang disebabkan oleh bakteri Mycobacterium tuberculosis yang menyerang paru-paru dan organ lainnya.
+                Deteksi dini TBC sangat penting untuk mencegah penyebaran dan komplikasi serius.
+              </p>
+              <p class="mb-5 text-base leading-relaxed">
+                TBC merupakan salah satu penyebab kematian utama di dunia, terutama di negara berkembang. Penanganan yang cepat dan tepat dapat meningkatkan angka kesembuhan dan mengurangi dampak sosial ekonomi.
+              </p>
+              <p class="mb-5 text-base leading-relaxed">
+                Gejala umum TBC meliputi batuk berkepanjangan, demam, penurunan berat badan, dan keringat malam. Jika Anda mengalami gejala ini, segera lakukan pemeriksaan.
+              </p>
+            </div>
+            <div class="flex justify-center items-center">
+              <img src="./img/tentang-tbc.png" alt="[Image of Tentang TBC]" class="w-full h-auto object-contain rounded-xl shadow-lg border border-gray-300 transform hover:scale-105 transition-transform duration-300">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20 text-center">
+        <div class="glass p-10 rounded-3xl shadow-xl space-y-6 transform transition-all duration-300 card animate-fade-in-up delay-100">
+          <h3 class="text-4xl font-extrabold text-green-600">10.4 Juta</h3>
+          <p class="text-gray-700 text-lg">Kasus TBC Baru per Tahun</p>
+          <div class="text-6xl text-teal-500 mt-6">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+        </div>
+        <div class="glass p-10 rounded-3xl shadow-xl space-y-6 transform transition-all duration-300 card animate-fade-in-up delay-200">
+          <h3 class="text-4xl font-extrabold text-green-600">1.25 Juta</h3>
+          <p class="text-gray-700 text-lg">Kematian akibat TBC per Tahun</p>
+          <div class="text-6xl text-red-500 mt-6">
+            <i class="fa-solid fa-heartbeat"></i>
+          </div>
+        </div>
+        <div class="glass p-10 rounded-3xl shadow-xl space-y-6 transform transition-all duration-300 card animate-fade-in-up delay-300">
+          <h3 class="text-4xl font-extrabold text-green-600">85%</h3>
+          <p class="text-gray-700 text-lg">Angka Kesembuhan Global</p>
+          <div class="text-6xl text-blue-500 mt-6">
+            <i class="fa-solid fa-thumbs-up"></i>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-20 max-w-5xl mx-auto space-y-12">
+        <div class="glass p-10 rounded-3xl shadow-xl text-gray-800 border border-gray-200 animate-fade-in delay-800">
+          <h2 class="text-3xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-teal-500">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+          <div class="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto items-center">
+            <dl class="space-y-6 text-base">
+              <div>
+                <dt class="font-bold text-green-700 mb-1"><i class="fas fa-question-circle mr-2 text-lg"></i>Apa itu Tuberkulosis (TBC)?</dt>
+                <dd class="ml-8 text-gray-700 leading-relaxed">TBC adalah penyakit infeksi yang menyerang paru-paru dan organ lainnya, disebabkan oleh bakteri Mycobacterium tuberculosis.</dd>
+              </div>
+              <div>
+                <dt class="font-bold text-green-700 mb-1"><i class="fas fa-question-circle mr-2 text-lg"></i>Bagaimana cara penularan TBC?</dt>
+                <dd class="ml-8 text-gray-700 leading-relaxed">TBC menular melalui udara saat penderita batuk atau bersin.</dd>
+              </div>
+              <div>
+                <dt class="font-bold text-green-700 mb-1"><i class="fas fa-question-circle mr-2 text-lg"></i>Apakah TBC bisa disembuhkan?</dt>
+                <dd class="ml-8 text-gray-700 leading-relaxed">Ya, dengan pengobatan yang tepat dan teratur, TBC dapat disembuhkan.</dd>
+              </div>
+              <div>
+                <dt class="font-bold text-green-700 mb-1"><i class="fas fa-question-circle mr-2 text-lg"></i>Kapan saya harus melakukan pemeriksaan?</dt>
+                <dd class="ml-8 text-gray-700 leading-relaxed">Segera lakukan pemeriksaan jika mengalami gejala seperti batuk berkepanjangan, demam, dan penurunan berat badan.</dd>
+              </div>
+            </dl>
+            <div class="flex justify-center items-center">
+              <img src="./img/faq.png" alt="[Image of FAQ]" class="w-full h-auto object-contain rounded-xl shadow-lg border border-gray-300 transform hover:scale-105 transition-transform duration-300">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-20 max-w-6xl mx-auto">
+        <div class="glass p-8 rounded-3xl shadow-xl space-y-6 transform transition-all duration-300 card animate-fade-in-up delay-400">
+          <div class="text-6xl text-green-600">
+            <i class="fa-solid fa-stethoscope"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800">Analisis Gejala</h2>
+          <p class="text-gray-700 text-sm leading-relaxed">
+            Gunakan fitur analisis gejala untuk mendeteksi kemungkinan TBC berdasarkan jawaban Anda terhadap pertanyaan gejala.
+            Sistem kami menggunakan Machine Learning untuk memberikan hasil yang akurat dan cepat.
+          </p>
+          <a href="./sistem_analisis.html" class="inline-block mt-5 text-green-700 hover:underline font-semibold text-base">Mulai Analisis <i class="fas fa-arrow-right ml-2"></i></a>
+        </div>
+        <div class="glass p-8 rounded-3xl shadow-xl space-y-6 transform transition-all duration-300 card animate-fade-in-up delay-500">
+          <div class="text-6xl text-teal-600">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800">Chatbot Kesehatan</h2>
+          <p class="text-gray-700 text-sm leading-relaxed">
+            Akses chatbot kesehatan kami untuk mendapatkan rekomendasi dan informasi tentang TBC.
+          </p>
+          <a href="./chatbot.html" class="inline-block mt-5 text-green-700 hover:underline font-semibold text-base">Chatbot <i class="fas fa-arrow-right ml-2"></i></a>
+        </div>
+        <div class="glass p-8 rounded-3xl shadow-xl space-y-6 transform transition-all duration-300 card animate-fade-in-up delay-600">
+          <div class="text-6xl text-lime-600">
+            <i class="fa-solid fa-newspaper"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800">Artikel Kesehatan</h2>
+          <p class="text-gray-700 text-sm leading-relaxed">
+            Baca artikel kesehatan terbaru dan terpercaya yang kami sediakan untuk menambah wawasan dan menjaga kesehatan Anda.
+          </p>
+          <a href="./article-list.html" class="inline-block mt-5 text-green-700 hover:underline font-semibold text-base">Baca Artikel <i class="fas fa-arrow-right ml-2"></i></a>
+        </div>
+        <div class="glass p-8 rounded-3xl shadow-xl space-y-6 transform transition-all duration-300 card animate-fade-in-up delay-700">
+          <div class="text-6xl text-emerald-600">
+            <i class="fa-solid fa-x-ray"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-800">Analisis Citra Rontgen</h2>
+          <p class="text-gray-700 text-sm leading-relaxed">
+            Unggah gambar rontgen dada Anda dan sistem kami akan membantu menganalisis kemungkinan adanya indikasi TBC menggunakan teknologi Deep Learning.
+          </p>
+          <a href="#" class="inline-block mt-5 text-green-700 hover:underline font-semibold text-base">Unggah Citra <i class="fas fa-arrow-right ml-2"></i></a>
+        </div>
+      </section>
+
+    </main>
+    <footer class="bg-gray-100 text-gray-600 py-10 px-8 w-full">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        <div>
+          <h3 class="text-xl font-bold mb-4 text-gray-900">Epicare</h3>
+          <p class="mt-4 text-gray-500">© 2025 Epicare. All rights reserved.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4 text-gray-900">Kontak</h3>
+          <p class="text-gray-500">Email: support@epicare.com</p>
+          <p class="text-gray-500">Telepon: +62 123 4567 890</p>
+          <p class="text-gray-500">Alamat: Jl. Kesehatan No. 123, Jakarta</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4 text-gray-900">Ikuti Kami</h3>
+          <div class="flex justify-center md:justify-start space-x-6 text-2xl">
+            <a href="#" aria-label="Facebook" class="hover:text-green-600 transform hover:scale-110 transition-all duration-200"><i class="fab fa-facebook"></i></a>
+            <a href="#" aria-label="Twitter" class="hover:text-green-600 transform hover:scale-110 transition-all duration-200"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram" class="hover:text-green-600 transform hover:scale-110 transition-all duration-200"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script>
+    // Initialize ScrollReveal
+    ScrollReveal().reveal('.glass, .card', {
+      origin: 'bottom',
+      distance: '50px', /* Adjusted distance */
+      duration: 800, /* Adjusted duration */
+      easing: 'ease-out', /* Smoother easing */
+      interval: 100, /* Adjusted interval */
+      cleanup: true,
+      reset: false
+    });
+
+    // Keyframe animations (add these to your main CSS file or in a <style> tag)
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes fade-in-down {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fade-in-up {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-fade-in-down {
+        animation: fade-in-down 1s ease-out forwards;
+      }
+
+      .animate-fade-in {
+        animation: fade-in 1s ease-out forwards;
+      }
+
+      .animate-fade-in-up {
+        animation: fade-in-up 1s ease-out forwards;
+      }
+
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-400 { animation-delay: 0.4s; }
+      .delay-500 { animation-delay: 0.5s; }
+      .delay-600 { animation-delay: 0.6s; }
+      .delay-700 { animation-delay: 0.7s; }
+      .delay-800 { animation-delay: 0.8s; }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+
+</html>
