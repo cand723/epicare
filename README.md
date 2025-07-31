@@ -2,7 +2,7 @@
 
 🌐 [Coba Sekarang](https://epicare-fullstack.onrender.com/frontend/index.html)
 
-**Epicare** adalah platform web interaktif yang menyediakan berbagai artikel informatif seputar penyakit menular seperti TBC, malaria, hepatitis, dan lainnya. Website ini dirancang untuk meningkatkan literasi kesehatan masyarakat melalui informasi yang terpercaya dan mudah diakses.
+**Epicare** adalah platform web interaktif yang menyediakan berbagai artikel informatif seputar penyakit menular TBC. Website ini dirancang untuk meningkatkan literasi kesehatan masyarakat melalui informasi yang terpercaya dan mudah diakses.
 
 ---
 
